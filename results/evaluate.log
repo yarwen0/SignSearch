@@ -1,0 +1,634 @@
+WARNING:root:Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+{
+  "dataset": {
+    "seed": 0,
+    "classes": 250,
+    "selection": "random.Random(0).sample(sorted(common_glosses), 250)",
+    "splits": {
+      "train": {
+        "clips": 3621,
+        "signers": 34
+      },
+      "val": {
+        "clips": 962,
+        "signers": 6
+      },
+      "test": {
+        "clips": 2989,
+        "signers": 11
+      }
+    }
+  },
+  "training": {
+    "epochs": 100,
+    "patience": 15,
+    "learning_rates": [
+      0.0003,
+      0.001
+    ],
+    "batch_size": 64,
+    "device": "mps",
+    "seed": 0,
+    "optimizer": "AdamW",
+    "weight_decay": 0.01,
+    "label_smoothing": 0.1,
+    "schedule": "CosineAnnealingLR",
+    "selection": "validation top-1 only; strict improvements; earliest tie",
+    "input_features": 101,
+    "frames": 64,
+    "classes": 250,
+    "dim": 192,
+    "layers": 4,
+    "heads": 4,
+    "dropout": 0.1,
+    "augmentations": {
+      "scale": [
+        0.9,
+        1.1
+      ],
+      "rotation_radians": [
+        -0.15,
+        0.15
+      ],
+      "shift": [
+        -0.1,
+        0.1
+      ],
+      "speed": [
+        0.8,
+        1.25
+      ],
+      "horizontal_flip_probability": 0.5
+    }
+  },
+  "selection": {
+    "baseline": {
+      "checkpoint": "checkpoints/baseline_lr0.001.pt",
+      "sha256": "c8dd55cd240caeaa5c5fad23dd9e02c4965a40a6f133a792227298fdc6e7d49d",
+      "validation_top1": 0.7172557172557172,
+      "epoch": 83,
+      "learning_rate": 0.001
+    },
+    "transformer": {
+      "checkpoint": "checkpoints/transformer_lr0.0003.pt",
+      "sha256": "c67bdd4475cfb5d28980db4e8510e159db0a012b1ab5bfa61aad40c2691d486a",
+      "validation_top1": 0.9178794178794178,
+      "epoch": 65,
+      "learning_rate": 0.0003
+    }
+  },
+  "cpu_latency": {
+    "fp32": {
+      "median_ms": 0.6650834999999999,
+      "p95_ms": 1.2689583499999995,
+      "runs": 500,
+      "warmup_runs": 50,
+      "batch": 1,
+      "frames": 64,
+      "intra_op_threads": 4,
+      "inter_op_threads": 1
+    },
+    "int8": {
+      "median_ms": 0.68275,
+      "p95_ms": 0.9813812499999983,
+      "runs": 500,
+      "warmup_runs": 50,
+      "batch": 1,
+      "frames": 64,
+      "intra_op_threads": 4,
+      "inter_op_threads": 1
+    }
+  },
+  "machine": {
+    "cpu": "Apple M4",
+    "memory_bytes": 17179869184,
+    "platform": "macOS-26.3-arm64-arm-64bit",
+    "python": "3.12.13",
+    "onnxruntime": "1.32.0",
+    "torch": "2.15.0"
+  },
+  "export": {
+    "fp32_sha256": "d9ca147c9d90b81928eb5f4070bbc7eb721a9cfd972956738889ab8b1e483d75",
+    "int8_sha256": "bcae6e07ea600d2ba6b8c6b5f2dfbce3368de13816bb60d7d2f1ffe1b1d197bc",
+    "synthetic_fp32_max_abs_error": 4.76837158203125e-07
+  },
+  "models": {
+    "baseline": {
+      "val": {
+        "top1": 0.7172557172557172,
+        "top5": 0.9282744282744283,
+        "mrr": 0.8078648982478929,
+        "clips": 962,
+        "signers": 6,
+        "per_signer": {
+          "min": 0.0,
+          "median": 0.7168761531365313,
+          "max": 0.7702702702702703,
+          "full_list": [
+            {
+              "signer": "P12",
+              "clips": 74,
+              "top1": 0.7702702702702703
+            },
+            {
+              "signer": "P13",
+              "clips": 1,
+              "top1": 0.0
+            },
+            {
+              "signer": "P21",
+              "clips": 278,
+              "top1": 0.7589928057553957
+            },
+            {
+              "signer": "P26",
+              "clips": 274,
+              "top1": 0.6532846715328468
+            },
+            {
+              "signer": "P39",
+              "clips": 271,
+              "top1": 0.7306273062730627
+            },
+            {
+              "signer": "P5",
+              "clips": 64,
+              "top1": 0.703125
+            }
+          ]
+        },
+        "top1_bootstrap_95_ci": [
+          0.6891891891891891,
+          0.7453222453222453
+        ],
+        "bootstrap_resamples": 1000,
+        "bootstrap_seed": 0
+      },
+      "test": {
+        "top1": 0.625627300100368,
+        "top5": 0.8882569421211107,
+        "mrr": 0.7402170710723981,
+        "clips": 2989,
+        "signers": 11,
+        "per_signer": {
+          "min": 0.49466192170818507,
+          "median": 0.6204379562043796,
+          "max": 0.7269372693726938,
+          "full_list": [
+            {
+              "signer": "P15",
+              "clips": 281,
+              "top1": 0.6512455516014235
+            },
+            {
+              "signer": "P17",
+              "clips": 266,
+              "top1": 0.5977443609022557
+            },
+            {
+              "signer": "P18",
+              "clips": 276,
+              "top1": 0.5833333333333334
+            },
+            {
+              "signer": "P22",
+              "clips": 281,
+              "top1": 0.49466192170818507
+            },
+            {
+              "signer": "P35",
+              "clips": 272,
+              "top1": 0.7132352941176471
+            },
+            {
+              "signer": "P42",
+              "clips": 267,
+              "top1": 0.6816479400749064
+            },
+            {
+              "signer": "P47",
+              "clips": 271,
+              "top1": 0.7269372693726938
+            },
+            {
+              "signer": "P48",
+              "clips": 264,
+              "top1": 0.5757575757575758
+            },
+            {
+              "signer": "P49",
+              "clips": 275,
+              "top1": 0.6327272727272727
+            },
+            {
+              "signer": "P6",
+              "clips": 262,
+              "top1": 0.6068702290076335
+            },
+            {
+              "signer": "P9",
+              "clips": 274,
+              "top1": 0.6204379562043796
+            }
+          ]
+        },
+        "top1_bootstrap_95_ci": [
+          0.6082218133154902,
+          0.6430327868852459
+        ],
+        "bootstrap_resamples": 1000,
+        "bootstrap_seed": 0
+      }
+    },
+    "transformer": {
+      "val": {
+        "top1": 0.9178794178794178,
+        "top5": 0.9844074844074844,
+        "mrr": 0.9481407104620438,
+        "clips": 962,
+        "signers": 6,
+        "per_signer": {
+          "min": 0.859375,
+          "median": 0.9380126894794127,
+          "max": 1.0,
+          "full_list": [
+            {
+              "signer": "P12",
+              "clips": 74,
+              "top1": 0.9459459459459459
+            },
+            {
+              "signer": "P13",
+              "clips": 1,
+              "top1": 1.0
+            },
+            {
+              "signer": "P21",
+              "clips": 278,
+              "top1": 0.9424460431654677
+            },
+            {
+              "signer": "P26",
+              "clips": 274,
+              "top1": 0.8832116788321168
+            },
+            {
+              "signer": "P39",
+              "clips": 271,
+              "top1": 0.933579335793358
+            },
+            {
+              "signer": "P5",
+              "clips": 64,
+              "top1": 0.859375
+            }
+          ]
+        },
+        "top1_bootstrap_95_ci": [
+          0.9002079002079002,
+          0.934537422037422
+        ],
+        "bootstrap_resamples": 1000,
+        "bootstrap_seed": 0
+      },
+      "test": {
+        "top1": 0.8634994981599197,
+        "top5": 0.9648711943793911,
+        "mrr": 0.9085084803555744,
+        "clips": 2989,
+        "signers": 11,
+        "per_signer": {
+          "min": 0.8129770992366412,
+          "median": 0.875,
+          "max": 0.9298892988929889,
+          "full_list": [
+            {
+              "signer": "P15",
+              "clips": 281,
+              "top1": 0.8291814946619217
+            },
+            {
+              "signer": "P17",
+              "clips": 266,
+              "top1": 0.8345864661654135
+            },
+            {
+              "signer": "P18",
+              "clips": 276,
+              "top1": 0.822463768115942
+            },
+            {
+              "signer": "P22",
+              "clips": 281,
+              "top1": 0.8185053380782918
+            },
+            {
+              "signer": "P35",
+              "clips": 272,
+              "top1": 0.875
+            },
+            {
+              "signer": "P42",
+              "clips": 267,
+              "top1": 0.8764044943820225
+            },
+            {
+              "signer": "P47",
+              "clips": 271,
+              "top1": 0.9298892988929889
+            },
+            {
+              "signer": "P48",
+              "clips": 264,
+              "top1": 0.9242424242424242
+            },
+            {
+              "signer": "P49",
+              "clips": 275,
+              "top1": 0.8872727272727273
+            },
+            {
+              "signer": "P6",
+              "clips": 262,
+              "top1": 0.8129770992366412
+            },
+            {
+              "signer": "P9",
+              "clips": 274,
+              "top1": 0.8905109489051095
+            }
+          ]
+        },
+        "top1_bootstrap_95_ci": [
+          0.8514553362328537,
+          0.8748829039812646
+        ],
+        "bootstrap_resamples": 1000,
+        "bootstrap_seed": 0
+      }
+    },
+    "onnx_fp32": {
+      "val": {
+        "top1": 0.9178794178794178,
+        "top5": 0.9844074844074844,
+        "mrr": 0.9481407104620438,
+        "clips": 962,
+        "signers": 6,
+        "per_signer": {
+          "min": 0.859375,
+          "median": 0.9380126894794127,
+          "max": 1.0,
+          "full_list": [
+            {
+              "signer": "P12",
+              "clips": 74,
+              "top1": 0.9459459459459459
+            },
+            {
+              "signer": "P13",
+              "clips": 1,
+              "top1": 1.0
+            },
+            {
+              "signer": "P21",
+              "clips": 278,
+              "top1": 0.9424460431654677
+            },
+            {
+              "signer": "P26",
+              "clips": 274,
+              "top1": 0.8832116788321168
+            },
+            {
+              "signer": "P39",
+              "clips": 271,
+              "top1": 0.933579335793358
+            },
+            {
+              "signer": "P5",
+              "clips": 64,
+              "top1": 0.859375
+            }
+          ]
+        },
+        "top1_bootstrap_95_ci": [
+          0.9002079002079002,
+          0.934537422037422
+        ],
+        "bootstrap_resamples": 1000,
+        "bootstrap_seed": 0
+      },
+      "test": {
+        "top1": 0.8634994981599197,
+        "top5": 0.9648711943793911,
+        "mrr": 0.9085084803555744,
+        "clips": 2989,
+        "signers": 11,
+        "per_signer": {
+          "min": 0.8129770992366412,
+          "median": 0.875,
+          "max": 0.9298892988929889,
+          "full_list": [
+            {
+              "signer": "P15",
+              "clips": 281,
+              "top1": 0.8291814946619217
+            },
+            {
+              "signer": "P17",
+              "clips": 266,
+              "top1": 0.8345864661654135
+            },
+            {
+              "signer": "P18",
+              "clips": 276,
+              "top1": 0.822463768115942
+            },
+            {
+              "signer": "P22",
+              "clips": 281,
+              "top1": 0.8185053380782918
+            },
+            {
+              "signer": "P35",
+              "clips": 272,
+              "top1": 0.875
+            },
+            {
+              "signer": "P42",
+              "clips": 267,
+              "top1": 0.8764044943820225
+            },
+            {
+              "signer": "P47",
+              "clips": 271,
+              "top1": 0.9298892988929889
+            },
+            {
+              "signer": "P48",
+              "clips": 264,
+              "top1": 0.9242424242424242
+            },
+            {
+              "signer": "P49",
+              "clips": 275,
+              "top1": 0.8872727272727273
+            },
+            {
+              "signer": "P6",
+              "clips": 262,
+              "top1": 0.8129770992366412
+            },
+            {
+              "signer": "P9",
+              "clips": 274,
+              "top1": 0.8905109489051095
+            }
+          ]
+        },
+        "top1_bootstrap_95_ci": [
+          0.8514553362328537,
+          0.8748829039812646
+        ],
+        "bootstrap_resamples": 1000,
+        "bootstrap_seed": 0
+      }
+    },
+    "onnx_int8": {
+      "val": {
+        "top1": 0.9178794178794178,
+        "top5": 0.9844074844074844,
+        "mrr": 0.9484674855255907,
+        "clips": 962,
+        "signers": 6,
+        "per_signer": {
+          "min": 0.859375,
+          "median": 0.9380126894794127,
+          "max": 1.0,
+          "full_list": [
+            {
+              "signer": "P12",
+              "clips": 74,
+              "top1": 0.9459459459459459
+            },
+            {
+              "signer": "P13",
+              "clips": 1,
+              "top1": 1.0
+            },
+            {
+              "signer": "P21",
+              "clips": 278,
+              "top1": 0.9424460431654677
+            },
+            {
+              "signer": "P26",
+              "clips": 274,
+              "top1": 0.8832116788321168
+            },
+            {
+              "signer": "P39",
+              "clips": 271,
+              "top1": 0.933579335793358
+            },
+            {
+              "signer": "P5",
+              "clips": 64,
+              "top1": 0.859375
+            }
+          ]
+        },
+        "top1_bootstrap_95_ci": [
+          0.9002079002079002,
+          0.934537422037422
+        ],
+        "bootstrap_resamples": 1000,
+        "bootstrap_seed": 0
+      },
+      "test": {
+        "top1": 0.8628303780528604,
+        "top5": 0.9638675142188022,
+        "mrr": 0.9082442150058024,
+        "clips": 2989,
+        "signers": 11,
+        "per_signer": {
+          "min": 0.8091603053435115,
+          "median": 0.875,
+          "max": 0.9318181818181818,
+          "full_list": [
+            {
+              "signer": "P15",
+              "clips": 281,
+              "top1": 0.8256227758007118
+            },
+            {
+              "signer": "P17",
+              "clips": 266,
+              "top1": 0.8308270676691729
+            },
+            {
+              "signer": "P18",
+              "clips": 276,
+              "top1": 0.822463768115942
+            },
+            {
+              "signer": "P22",
+              "clips": 281,
+              "top1": 0.8149466192170819
+            },
+            {
+              "signer": "P35",
+              "clips": 272,
+              "top1": 0.875
+            },
+            {
+              "signer": "P42",
+              "clips": 267,
+              "top1": 0.8764044943820225
+            },
+            {
+              "signer": "P47",
+              "clips": 271,
+              "top1": 0.9298892988929889
+            },
+            {
+              "signer": "P48",
+              "clips": 264,
+              "top1": 0.9318181818181818
+            },
+            {
+              "signer": "P49",
+              "clips": 275,
+              "top1": 0.8836363636363637
+            },
+            {
+              "signer": "P6",
+              "clips": 262,
+              "top1": 0.8091603053435115
+            },
+            {
+              "signer": "P9",
+              "clips": 274,
+              "top1": 0.8941605839416058
+            }
+          ]
+        },
+        "top1_bootstrap_95_ci": [
+          0.8504432920709267,
+          0.874548343927735
+        ],
+        "bootstrap_resamples": 1000,
+        "bootstrap_seed": 0
+      }
+    }
+  },
+  "keypoint_extraction": {
+    "median_ms_per_frame": 30.591917037963867,
+    "p95_ms_per_frame": 51.08576583862305,
+    "mean_ms_per_frame": 32.75593185424805,
+    "frames": 618347,
+    "workers": 8,
+    "scope": "HandLandmarker and PoseLandmarker detect_for_video calls, CPU, concurrent extraction; excludes model startup, video decoding and file IO"
+  },
+  "completed_at": "2026-11-22T05:49:26.102108+00:00"
+}

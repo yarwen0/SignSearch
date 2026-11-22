@@ -1,0 +1,19 @@
+{
+  "seed": 0,
+  "classes": 250,
+  "selection": "random.Random(0).sample(sorted(common_glosses), 250)",
+  "splits": {
+    "train": {
+      "clips": 3621,
+      "signers": 34
+    },
+    "val": {
+      "clips": 962,
+      "signers": 6
+    },
+    "test": {
+      "clips": 2989,
+      "signers": 11
+    }
+  }
+}

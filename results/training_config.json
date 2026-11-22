@@ -1,0 +1,42 @@
+{
+  "epochs": 100,
+  "patience": 15,
+  "learning_rates": [
+    0.0003,
+    0.001
+  ],
+  "batch_size": 64,
+  "device": "mps",
+  "seed": 0,
+  "optimizer": "AdamW",
+  "weight_decay": 0.01,
+  "label_smoothing": 0.1,
+  "schedule": "CosineAnnealingLR",
+  "selection": "validation top-1 only; strict improvements; earliest tie",
+  "input_features": 101,
+  "frames": 64,
+  "classes": 250,
+  "dim": 192,
+  "layers": 4,
+  "heads": 4,
+  "dropout": 0.1,
+  "augmentations": {
+    "scale": [
+      0.9,
+      1.1
+    ],
+    "rotation_radians": [
+      -0.15,
+      0.15
+    ],
+    "shift": [
+      -0.1,
+      0.1
+    ],
+    "speed": [
+      0.8,
+      1.25
+    ],
+    "horizontal_flip_probability": 0.5
+  }
+}

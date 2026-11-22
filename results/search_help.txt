@@ -1,0 +1,11 @@
+usage: search.py [-h] [--top-k TOP_K] [--precision {fp32,int8}] video
+
+Rank dictionary glosses for a user's isolated sign clip.
+
+positional arguments:
+  video
+
+options:
+  -h, --help            show this help message and exit
+  --top-k TOP_K
+  --precision {fp32,int8}

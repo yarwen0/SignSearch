@@ -1,0 +1,19 @@
+{
+  "started_at": "2026-11-22T05:49:17.485117+00:00",
+  "selection": {
+    "baseline": {
+      "checkpoint": "checkpoints/baseline_lr0.001.pt",
+      "sha256": "c8dd55cd240caeaa5c5fad23dd9e02c4965a40a6f133a792227298fdc6e7d49d",
+      "validation_top1": 0.7172557172557172,
+      "epoch": 83,
+      "learning_rate": 0.001
+    },
+    "transformer": {
+      "checkpoint": "checkpoints/transformer_lr0.0003.pt",
+      "sha256": "c67bdd4475cfb5d28980db4e8510e159db0a012b1ab5bfa61aad40c2691d486a",
+      "validation_top1": 0.9178794178794178,
+      "epoch": 65,
+      "learning_rate": 0.0003
+    }
+  }
+}

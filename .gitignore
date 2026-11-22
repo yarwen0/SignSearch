@@ -1,0 +1,12 @@
+.venv/
+data/
+keypoints/
+models/
+checkpoints/
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
+
+results/raw_*.npz
+results/prepare*.log

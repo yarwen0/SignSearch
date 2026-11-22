@@ -1,0 +1,9 @@
+[project]
+name = "signsearch"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["mediapipe", "torch", "opencv-python-headless", "numpy", "remotezip", "onnx", "onnxruntime"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
